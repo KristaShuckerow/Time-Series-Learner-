@@ -2,4 +2,35 @@ install.packages("forecast")
 library(forecast)
 #Intrapolation VS extrapolation
 
-#intrapolation without forecast
+#use data set in forecast
+#intrapolation
+#nhtemp is mean ANNUAL data, which because of the small time frame of 60 years should stay relatively constant 
+is.ts(nhtemp)
+plot.ts(nhtemp)
+intra <- HoltWinters(nhtemp, beta = F, gamma = F)
+intra$SSE 
+plot(intra)
+#beta for exponential smoothing
+#gamma true for seasonal - wine sales are seasonal
+
+#EXTRAPOLATION -- predicting the future (short term)
+#you have to put in data that has already been throught HoltWinters Function
+# h is how many more points you want to learn forward (extrapolate)
+extra <- forecast.HoltWinters(intra, h = 10) #holds predictions for next ten years
+extra # the point forecast stays constant for all as it is the expected value, CI gets wider with time. 
+
+#It has prediction intervals for the data, you currently for lower and upper bounds for 80%CI and 95% CI (default)
+#Change prediction intervals
+extra1 <- forecast.HoltWinters(intra, h= 10, level = c(90, 95))
+extra1
+
+extra2 <- forecast.HoltWinters(intra, h = 5, level = c(80, 90, 95))
+
+#remember higher confidence results in larger intervals
+plot.forecast(extra)
+plot.forecast(extra1) #lower confidence has darker blue colors.
+plot.forecast(extra2)
+
+#has a whole lot more atrributes to look at.
+str(extra)
+#for more see correleograms
