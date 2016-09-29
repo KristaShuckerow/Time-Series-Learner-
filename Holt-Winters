@@ -1,0 +1,5 @@
+install.packages("forecast")
+library(forecast)
+#Intrapolation VS extrapolation
+
+#intrapolation without forecast
