@@ -1,0 +1,7 @@
+#in forecast errors gives idea of how accurate it will be for short term predictions. 
+library(forecast)
+test1 <- HoltWinters(nhtemp, beta = F, gamma = F)
+test2 <- forecast.HoltWinters(test1, h = 10)
+is.ts(test2$residuals)
+test3 <- na.omit(test2$residuals)
+pacf(test3, lag.max = 30)
