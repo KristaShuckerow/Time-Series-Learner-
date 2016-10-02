@@ -4,4 +4,7 @@ test1 <- HoltWinters(nhtemp, beta = F, gamma = F)
 test2 <- forecast.HoltWinters(test1, h = 10)
 is.ts(test2$residuals)
 test3 <- na.omit(test2$residuals)
+acf(test3, lag.max = 30)
 pacf(test3, lag.max = 30)
+#these two things will show something slightly different
+#check documentation to determine how they are used differently in analysis
